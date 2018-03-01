@@ -5,13 +5,18 @@ from phonebook import Phonebook
 
 class PhonebookTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.phonebook = Phonebook()
+        pass
+
     def test_add_contacts(self):
-        phonebook = Phonebook()
-        response = phonebook.add_contacts("My Name", "0716908410")
-        self.assertEqual(response["message"], "contact successfully added")
+        resp = self.phonebook.add_contacts("My Name", "0716908410")
+        self.assertEqual(resp["message"], "contact successfully added")
 
     def test_view_contacts(self):
-        pass
+        self.phonebook.add_contacts("Redlion", "0715846586")
+        resp = self.phonebook.view_contacts("Redlion")
+        self.assertEqual(resp, "0715846586")
 
     def test_delete_contacts(self):
         pass
