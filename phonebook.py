@@ -9,6 +9,11 @@ class Phonebook:
         return {"message": "Contact successfully added!!"}
 
     def view_contact(self, name):
+        view = self.phonebook.get(name, "Empty")
+        if view == "Empty":
+            return {"message": "The contanct you \
+            are looking for is missing!!"}
+
         return self.phonebook[name]
 
     def delete_contact(self, name):
