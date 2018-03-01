@@ -6,7 +6,7 @@ class Phonebook:
 
     def add_contact(self, name, contact):
 
-        if contact.isdigit() and (name != "" or name != " "):
+        if contact.isdigit() and (name or name.strip()):
             self.phonebook[name] = contact
             return {"message": "Contact successfully added!!"}
 

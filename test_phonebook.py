@@ -19,11 +19,11 @@ class PhonebookAddTestCase(unittest.TestCase):
 
     def test_add_empty_contact(self):
         resp = self.contact1
-        self.assertRaises(ValueError, resp, " ", "0716908432")
+        self.assertRaises(ValueError, resp, "", "0716908432")
 
     def test_add_empty_number_contact(self):
         resp = self.contact1
-        self.assertRaises(ValueError, resp, "Denis ", " ")
+        self.assertRaises(ValueError, resp, "Denis", " ")
 
 
 class PhonebookViewTestCase(unittest.TestCase):
