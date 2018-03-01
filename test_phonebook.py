@@ -8,11 +8,15 @@ class PhonebookAddTestCase(unittest.TestCase):
     def setUp(self):
         self.phonebook = Phonebook()
         self.contact1 = self.phonebook.add_contact("My Name", "0716908410")
-        pass
+        self.contact2 = self.phonebook.add_contact("My Name", "07169084dy")
 
     def test_add_contact(self):
         resp = self.contact1
         self.assertEqual(resp["message"], "Contact successfully added!!")
+
+    def test_add_contact_wrong_number(self):
+        resp = self.contact2
+        self.assertRaises(ValueError, resp)
 
 
 class PhonebookViewTestCase(unittest.TestCase):
@@ -30,22 +34,31 @@ class PhonebookEditTestCase(unittest.TestCase):
 
     def setUp(self):
         self.phonebook = Phonebook()
+        self.contact = self.phonebook.add_contact("Redlion", "0715846586")
 
-    def test_edit_contact(self):
-        pass
+    def test_edit_contact_number(self):
+        resp = self.phonebook.edit_contact("Redlion", "0754681222")
+        self.assertNotEqual(resp, "0715846586")
+
+    def test_edit_contact_name(self):
+        resp = self.phonebook.edit_contact("Redlion", "Isaac")
+        self.assertEqual(resp, None)
 
 
 class PhonebookDeleteTestCase(unittest.TestCase):
 
     def setUp(self):
         self.phonebook = Phonebook()
+        self.contact = self.phonebook.add_contact("Redlion", "0715846586")
 
     def test_delete_contact(self):
-        self.phonebook.add_contact("Redlion", "0715846586")
         resp = self.phonebook.delete_contact("Redlion")
         self.assertEqual(resp["message"], "Contact successfully deleted!!")
-        resp2 = self.phonebook.view_contact("Redlion")
-        self.assertEqual(resp2["message"], "The contact is missing!!")
+
+    def test_view_contact_deleted(self):
+        self.phonebook.delete_contact("Redlion")
+        resp = self.phonebook.view_contact("Redlion")
+        self.assertEqual(resp["message"], "The contact is missing!!")
 
 
 if __name__ == '__main__':
