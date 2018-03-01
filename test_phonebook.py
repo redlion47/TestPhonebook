@@ -6,17 +6,24 @@ from phonebook import Phonebook
 class PhonebookAddTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.phonebook = Phonebook()
-        self.contact1 = self.phonebook.add_contact("My Name", "0716908410")
-        self.contact2 = self.phonebook.add_contact("My Name", "07169084dy")
+        phonebook = Phonebook()
+        self.contact1 = phonebook.add_contact
 
     def test_add_contact(self):
-        resp = self.contact1
+        resp = self.contact1("My Name", "0716908410")
         self.assertEqual(resp["message"], "Contact successfully added!!")
 
     def test_add_contact_wrong_number(self):
-        resp = self.contact2
-        self.assertRaises(ValueError, resp)
+        resp = self.contact1
+        self.assertRaises(ValueError, resp, "My Name", "07169084dy")
+
+    def test_add_empty_contact(self):
+        resp = self.contact1
+        self.assertRaises(ValueError, resp, " ", "0716908432")
+
+    def test_add_empty_number_contact(self):
+        resp = self.contact1
+        self.assertRaises(ValueError, resp, "Denis ", " ")
 
 
 class PhonebookViewTestCase(unittest.TestCase):
